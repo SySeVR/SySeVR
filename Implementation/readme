@@ -1,1 +1,17 @@
-readme
+Project Basic Environment:
+joern 0.3.1 + neo4j 2.1.5 + python 3.6 + tensorflow 1.6 + gensim 3.4
+GPU（ GTX 1080） *2
+
+Project Basic Process:
+
+1. Get Slices: Use joern to parse source code, and then start neo4j to generate
+slices with python files in First Step executed in order.And finally, use the last python
+file data_preprocess.py in First Step to write the label of every slice to the last line of
+the slice.
+
+2. Data Preprocess: This step includes getting corpus,training word2vec model,
+converting tokens into vectors,cutting vectors with python files in Second Step
+executed in order. Training word2vec model needs to adjust parameters.
+
+3. Deep Learning Model: Use bgru.py in Third Step to train bgru model, and then
+test. This step needs to activate tensorflow environment first.
