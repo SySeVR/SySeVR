@@ -1,8 +1,7 @@
-Project Basic Environment:
+Environment:
 joern 0.3.1 + neo4j 2.1.5 + python 3.6 + tensorflow 1.6 + gensim 3.4
-GPU（ GTX 1080） *2
 
-Project Basic Process:
+Basic Process:
 
 1. Get Slices: Use joern to parse source code, and then start neo4j to generate
 slices with python files in First Step executed in order.And finally, use the last python
