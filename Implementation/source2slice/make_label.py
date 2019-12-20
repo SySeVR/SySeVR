@@ -11,7 +11,7 @@ f = open("label_vec_type.pkl", 'rb')
 label_vec_type = pickle.load(f)
 f.close()
 
-f = open("dict_testcase2code_rndargs_500_test.pkl",'rb')
+f = open("dict_testcase2code.pkl",'rb')
 dict_testcase2code = pickle.load(f)
 f.close()
 
@@ -118,7 +118,7 @@ def make_label(path, dict_vuln2testcase, _type):
 
 
 def main():
-    f = open("dict_flawline2filepath_rndargs_500_test.pkl", 'rb')
+    f = open("dict_flawline2filepath.pkl", 'rb')
     dict_vuln2testcase = pickle.load(f)
     f.close()
     _type = False
