@@ -50,19 +50,19 @@ def get_dldata(filepath, dlTrainCorpusPath, dlTestCorpusPath, split=0.8, seed=11
     folders_train = folders[:int(len(folders)*split)]
     folders_test = folders[int(len(folders)*split):]
       
-    for mode in ["api", "array", "expr", "pointer"]:
+    for mode in ["api", "arraysuse", "pointersuse", "integeroverflow"]:
         if mode == "api":
-            N = 5
+            N = 4
             num = [0,1,2,3,4]
-        if mode == "array":
-            N = 4
-            num = [2]
-        if mode == "expr":
-            N = 4
-            num = [2]
-        if mode == "pointer":
-            N = 16
-            num = [8,9,10,11]
+        if mode == "arraysuse":
+            N = 2
+            num = [0,1]
+        if mode == "integeroverflow":
+            N = 2
+            num = [0,1]
+        if mode == "pointersuse":
+            N =6
+            num = [0,1,2,3,4,5]
         for i in num:
             train_set = [[], [], [], [], [], []]
             ids = []
@@ -83,16 +83,16 @@ def get_dldata(filepath, dlTrainCorpusPath, dlTestCorpusPath, split=0.8, seed=11
                         train_set[-1] = ids
             if train_set[0] == []:
                 continue
-            f_train = open(dlTrainCorpusPath + mode + "_" + str(i)+ "_jiaocha.pkl", 'wb')
+            f_train = open(dlTrainCorpusPath + mode + "_" + str(i)+ "_.pkl", 'wb')
             pickle.dump(train_set, f_train, protocol=pickle.HIGHEST_PROTOCOL)
             f_train.close()
             del train_set
             gc.collect()     
                     
-    for mode in ["api", "array", "expr", "pointer"]:
+    for mode in ["api", "arraysuse", "pointersuse", "integeroverflow"]:
         N = 4
         num = [0,1,2,3]
-        if mode == "pointer":
+        if mode == "pointersuse":
             N = 8
             num = [4,5]
         for i in num:
@@ -104,12 +104,12 @@ def get_dldata(filepath, dlTrainCorpusPath, dlTestCorpusPath, split=0.8, seed=11
                         if folder_test not in os.listdir(dlTestCorpusPath):
                             folder_path = os.path.join(dlTestCorpusPath, folder_test)
                             os.mkdir(folder_path)
-                            shutil.copyfile(filepath + folder_test + '/'+filename , dlTestCorpusPath + folder_test + '/'+filename) 
+                        shutil.copyfile(filepath + folder_test + '/'+filename , dlTestCorpusPath + folder_test + '/'+filename) 
                         f = open(filepath + folder_test + '/' + filename, 'rb')
                         data = pickle.load(f)
-			            id_length = len(data[1])
-			            for j in range(id_length):
-			                ids.append(folder_test)
+			id_length = len(data[1])
+			for j in range(id_length):
+			    ids.append(folder_test)
                         for n in range(5):
                             test_set[n] = test_set[n] + data[n]
                         test_set[-1] = ids
