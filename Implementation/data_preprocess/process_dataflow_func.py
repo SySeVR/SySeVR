@@ -24,15 +24,6 @@ This function is used to split the slice file and split codes into words
     [slices[], labels[], focus[]]
 '''
 
-testcases = []
-
-f = open("./record/SARD/testcases_train.pkl",'rb') 
-testcases += pickle.load(f)
-f.close()
-f = open("./record/SARD/testcases_test.pkl",'rb')
-testcases += pickle.load(f)
-f.close()
-
 def get_sentences(_path,labelpath,corpuspath,maptype=True):
     FLAGMODE = False
     if "SARD" in _path:
