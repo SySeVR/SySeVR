@@ -97,8 +97,8 @@ def CreateVariable(string, token):
     s = ''
     i = 0
     while (i < length):
-        if var(string[i]):  # 是标识符
-            #if i + 1 < length and (string[i + 1] == '->' or string[i + 1] == '.'):  # 如果当前的字符串是->或者是.
+        if var(string[i]):  
+            #if i + 1 < length and (string[i + 1] == '->' or string[i + 1] == '.'): 
             #    stack1.append(string[i])
             #    stack1.append(string[i + 1])
             #    i = i + 2
@@ -139,7 +139,7 @@ def mapping(list_sentence):
         strtemp = ''
         while i < len(str1):
             if tag == 0:
-                if isphor(str1[i], space):  # 遍历字符串，该字符是空格
+                if isphor(str1[i], space):  
                     if i > 0:
                         string.append(str1[j:i])
                         j = i + 1
@@ -152,7 +152,7 @@ def mapping(list_sentence):
                     string.append(str1[j:i + 1])
                     break
 
-                elif isphor(str1[i], phla):  # 遍历字符串，该字符不是是字母数字下划线
+                elif isphor(str1[i], phla):  
                     if i + 1 < len(str1) and str1[i] == '-' and str1[i + 1] == '>':
                         string.append(str1[i] + str1[i + 1])
                         j = i + 2
@@ -213,12 +213,12 @@ def mapping(list_sentence):
                         j = i + 2
                         i = i + 2
 
-                    elif str1[i] == '"':  # 判断是不是字符串常量
+                    elif str1[i] == '"':  
                         strtemp = strtemp + str1[i]
                         i = i + 1
                         tag = 1
 
-                    elif str1[i] == '\'':  # 判断是不是字符串常量
+                    elif str1[i] == '\'':  
                         strtemp = strtemp + str1[i]
                         i = i + 1
                         tag = 2
@@ -272,35 +272,35 @@ def mapping(list_sentence):
                 token[j] = token[j]
                 j += 1
 
-            elif j < len(token) and isphor(token[j], variable):  # 如果满足变量的条件
-                if (token[j] in keywords_0) or (token[j] in typewords_0) or (token[j] in typewords_1 or token[j] in typewords_2):  # 是关键字
+            elif j < len(token) and isphor(token[j], variable): 
+                if (token[j] in keywords_0) or (token[j] in typewords_0) or (token[j] in typewords_1 or token[j] in typewords_2): 
                     j += 1
 
                 elif j - 1 >= 0 and j + 1 < len(token) and token[j-1] == 'new' and token[j + 1] == '[':
                     j = j + 2
 
-                elif j + 1 < len(token) and token[j + 1] == '(':  # 满足变量，但是下一个token是(，判断是不是函数
+                elif j + 1 < len(token) and token[j + 1] == '(': 
                     #print(token[j])
-                    if token[j] in keywords_1:  # 判断是否是if等结构,但是在PDG的code里面不会出现if,for,switch等情况
+                    if token[j] in keywords_1: 
                         j = j + 2
 
-                    elif token[j] in keywords_2: # 判断是否是敏感函数，敏感函数不映射
+                    elif token[j] in keywords_2: 
                         #print('3', token[j])
                         j = j + 2
 
-                    elif isinKeyword_3(token[j]): # 判断是否满足敏感函数的通配符结构
+                    elif isinKeyword_3(token[j]): 
                         #print('4', token[j])
                         j = j + 2
 
-                    elif token[j] in keywords_4: #判断是否是C/C++的库函数和API
+                    elif token[j] in keywords_4: 
                         #print('5', token[j])
                         j = j + 2
 
-                    elif isinKeyword_5(token[j]): # 判断是否满足malloc函数的通配符结构
+                    elif isinKeyword_5(token[j]): 
                         #print('6', token[j])
                         j = j + 2
 
-                    else:#自定义函数
+                    else:
                         #print('7',token[j])
                         if "good" in token[j] or "bad" in token[j]:
                             list_func.append(str(token[j]))
@@ -325,7 +325,7 @@ def mapping(list_sentence):
                                     token[j] = _func_dict[token[j]]
                             j = j + 2
 
-                elif j + 1 < len(token) and (not isphor(token[j + 1], variable)):  # 满足变量，但是下一个token不是变量
+                elif j + 1 < len(token) and (not isphor(token[j + 1], variable)):
                     if token[j + 1] == '*':
                         if j + 2 < len(token) and token[j + 2] == 'const':
                             j = j + 3
@@ -333,7 +333,7 @@ def mapping(list_sentence):
                         elif j - 1 >= 0 and token[j - 1] == 'const':
                             j = j + 2
 
-                        elif j - 1 > 0 and (token[j - 1] in operators):  # 算术表达式中的变量
+                        elif j - 1 > 0 and (token[j - 1] in operators): 
                             list_values = _variable_dict.values()
                             if len(list_values) == 0:
                                 _variable_dict[token[j]] = 'variable_0'
@@ -355,7 +355,7 @@ def mapping(list_sentence):
                         elif j + 2 < len(token) and token[j + 2] == ')':
                             j = j + 2
 
-                        elif j - 2 > 0 and (token[j - 1] == '(' and token[j - 2] in operators):  # 算术表达式中的变量
+                        elif j - 2 > 0 and (token[j - 1] == '(' and token[j - 2] in operators):  
                             list_values = _variable_dict.values()
                             if len(list_values) == 0:
                                 _variable_dict[token[j]] = 'variable_0'
@@ -436,10 +436,10 @@ def mapping(list_sentence):
                 else:
                     j += 1
 
-            elif j < len(token) and isphor(token[j], number):  # 如果满足常量的条件
+            elif j < len(token) and isphor(token[j], number): 
                 j += 1
 
-            elif j < len(token) and isphor(token[j], stringConst): # 如果满足字符串常量
+            elif j < len(token) and isphor(token[j], stringConst): 
                 j += 1
 
             else:
