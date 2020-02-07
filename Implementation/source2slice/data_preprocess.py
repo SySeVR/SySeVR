@@ -48,7 +48,7 @@ for filename in os.listdir(slice_path):
             f.write(str(sentence)+'\n')
         f.write(str(label)+'\n')
         f.write('------------------------------'+'\n')
-	f.close()
+    f.close()
 print('\success!')
         
             
