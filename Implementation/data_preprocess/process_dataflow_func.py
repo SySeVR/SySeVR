@@ -71,14 +71,13 @@ def get_sentences(_path,labelpath,corpuspath,maptype=True):
                 del sentences[-1]
             if sentences[-1] == '\r':
                 del sentences[-1]
-            testcase_id = (sentences[0].split(' ')[1]).split('/')[7]
             label = int(sentences[-1])
 
             focuspointer = sentences[0].split(" ")[-2:]
             sliceid = index
             file_name = sentences[0]
             if FLAGMODE:    
-                program_id = sentences[0].split(" ")[1].split("/")[5]+sentences[0].split(" ")[1].split("/")[6]+sentences[0].split(" ")[1].split("/")[7]
+                program_id = sentences[0].split(" ")[1].split('/')[0]
             else:
                 program_id = sentences[0].split(" ")[1].split("/")[7]
             if lastprogram_id == 0:
