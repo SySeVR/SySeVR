@@ -8,8 +8,6 @@ http.socket_timeout = 9999
 
 
 def get_slice_file_sequence(store_filepath, list_result, count, func_name, startline, filepath_all):
-    #获取切片中每个节点的数据，组成数据流，和源代码尽可能的相似，filepath是保存数据流的地址，list_result是结果数据流，count是编号，func_name是针对的敏感函数名，
-    #src_vulnline_num是敏感点，vulnline_row是敏感点在数据流中的位置，便于后面截断
     list_for_line = []
     statement_line = 0
     vulnline_row = 0
@@ -237,7 +235,6 @@ def get_slice_file_sequence(store_filepath, list_result, count, func_name, start
 
 
 def program_slice(pdg, startnodesID, slicetype, testID):#process startnodes as a list, because main func has many different arguments
-    #给函数切片，startnodesID是一个保存切片的起始节点的一个list结构， slicetype定义切片方向， testID代表的切片的数据所属的testID或者是CVE号
     list_startnodes = []
     if pdg == False or pdg == None:
         return [], [], []
@@ -333,8 +330,6 @@ def api_slice():
     f = open("sensifunc_slice_points.pkl", 'rb')
     dict_unsliced_sensifunc = pickle.load(f)
     f.close()
-    #print dict_unsliced_sensifunc
-
     for key in dict_unsliced_sensifunc.keys():#key is testID
 
         for _t in dict_unsliced_sensifunc[key]:
@@ -342,58 +337,9 @@ def api_slice():
             pdg_funcid = _t[1]
             sensitive_funcname = _t[2]
 
-            if sensitive_funcname.find("main") != -1:#不针对main函数处理
-                continue #todo
-            else:
-                slice_dir = 2
-                pdg = getFuncPDGById(key, pdg_funcid)
-                if pdg == False:
-                    print 'error'
-                    exit()
-
-                list_code, startline, startline_path = program_slice(pdg, list_sensitive_funcid, slice_dir, key)
-                #print len(list_code)
-
-                if list_code == []:
-                    fout = open("error.txt", 'a')
-                    fout.write(sensitive_funcname + ' ' + str(list_sensitive_funcid) + ' found nothing! \n')
-                    fout.close()
-                else:
-                    for _list in list_code:
-                        get_slice_file_sequence(store_filepath, _list, count, sensitive_funcname, startline, startline_path)
-                        count += 1
-
-'''
-def point_use_slice():
-    count = 1
-    store_filepath = "pointer_use_slices.txt"
-    f = open("pointuse_slice_point.pkl", 'rb')
-    dict_unsliced_pointuse = pickle.load(f)
-    f.close()
-    #print dict_unsliced_sensifunc
-
-    for key in dict_unsliced_pointuse.keys():#key is testID
-
-        for _t in dict_unsliced_pointuse[key]:
-            list_sensitive_funcid = _t[0]
-            pdg_funcid = _t[1]
-            sensitive_funcname = _t[2]
-
             if sensitive_funcname.find("main") != -1:
                 continue #todo
             else:
-                #if sensitive_funcname != 'fprintf':
-                #    continue
-                #print list_sensitive_funcid
-                #exit()
-                #if list_sensitive_funcid != ['2']:
-                #    continue
-
-                print "pdg_funcid", pdg_funcid, key
-                print "list_sensitive_funcid", list_sensitive_funcid
-                print ''
-                #exit()
-
                 slice_dir = 2
                 pdg = getFuncPDGById(key, pdg_funcid)
                 if pdg == False:
@@ -411,7 +357,6 @@ def point_use_slice():
                     for _list in list_code:
                         get_slice_file_sequence(store_filepath, _list, count, sensitive_funcname, startline, startline_path)
                         count += 1
-'''
 
 def pointers_slice():
     count = 1
