@@ -3,7 +3,8 @@ from joern.all import JoernSteps
 from igraph import *
 from general_op import *
 import pickle
-
+from py2neo.packages.httpstream import http
+http.socket_timeout = 9999
 
 def get_all_use_bydefnode(db, node_id):
     query_str = "g.v(%d).in('USE')" % node_id
@@ -33,7 +34,7 @@ def get_all_def_bydefnode(db, node_id):
 
 def get_exprstmt_node(db):
     query_expr_str = "queryNodeIndex('type:ExpressionStatement')"
-
+    #results = db.runGremlinQuery(query_expr_str)
     results_1 = db.runGremlinQuery(query_expr_str)
 
     query_iddecl_str = 'queryNodeIndex("type:IdentifierDeclStatement")'
@@ -140,7 +141,7 @@ def getFuncNode(db, func_name):
 def getFuncFile(db, func_id):
     query_str = "g.v(%d).in('IS_FILE_OF').filepath" % func_id
     ret = db.runGremlinQuery(query_str)
-    #print ret
+    print ret
     return ret[0]
 
 
@@ -252,8 +253,11 @@ def getDEFNodesVar(db, func_id):
 
 
 def getUseDefVarByPDG(db, pdg):
+    #找到PDG图里面节点中的语句里面的定义的数据和使用的数据之间的关系
     dict_cfg2use = {}
     dict_cfg2def = {}
+    #print pdg
+    #need_to_addedge_node = []
     for node in pdg.vs:
         if node['type'] == 'Function':
             continue
@@ -290,6 +294,8 @@ def getUseDefVarByPDG(db, pdg):
 
                         def_node = value
 
+                    #need_to_addedge_node.append(node['name'])
+
             if use_node == False:
                 if code.find(" = ") != -1:
                     value = code.split(" = ")[1].strip().split(' ')
@@ -321,7 +327,8 @@ def getUseDefVarByPDG(db, pdg):
         else:#add define node
             new_def_node = getReturnVarOfAPI(node['code'])#get modify value of api_func
             if node['name'] == '2078':
-                print ("new_def_node", new_def_node)
+                print "new_def_node", new_def_node
+
             if new_def_node:
                 def_node = []
                 for code in new_def_node:
@@ -357,7 +364,6 @@ def getAllFuncfileByTestID(db, testID):
     testID = '*/'+ testID + '/*'
     query_str = "queryNodeIndex('type:File AND filepath:%s').id" % testID
     results = db.runGremlinQuery(query_str)
-    print(results)
     return results
 
 
@@ -368,9 +374,10 @@ def get_calls_id(db, func_name):
 
 
 def getCFGNodeByCallee(db, node_ast_id):
+    #print "start"
     query_str = "g.v(%s).in('IS_AST_PARENT')" % node_ast_id
     results = db.runGremlinQuery(query_str)
-
+    #print "end"
     if results == []:
         return None
 
@@ -391,7 +398,10 @@ def getCalleeNode(db, func_id):
 
 def get_all_calls_node(db, testID):
     list_all_funcID = [node._id for node in getFuncNodeInTestID(db, testID)]
+    print "list_all_funcID", list_all_funcID
+    print "lenth", len(list_all_funcID)
     if len(list_all_funcID)>130:
+        print ">100"
         return False
     list_all_callee_node = []
     for func_id in list_all_funcID:#allfile in a testID
@@ -405,14 +415,12 @@ def get_all_calls_node(db, testID):
 
 def getFuncNodeInTestID(db, testID):
     list_all_file_id = getAllFuncfileByTestID(db, testID)
-    print(list_all_file_id)
     if list_all_file_id == []:
         return False
 
     list_all_func_node = []  
 
     for file_id in list_all_file_id:
-        print(file_id)
         list_func_node = getFuncNodeByFile(db, file_id)
         list_all_func_node += list_func_node
 
@@ -420,9 +428,11 @@ def getFuncNodeInTestID(db, testID):
 
 
 def getClassByObjectAndFuncID(db, objectname, func_id):
+    #print objectname, func_id
     all_cfg_node = getCFGNodes(db, func_id)
     for cfg_node in all_cfg_node:
         if cfg_node.properties['code'] == objectname and cfg_node.properties['type'] == 'Statement':
+            print objectname, func_id, cfg_node.properties['code'], cfg_node._id
             query_str_1 = "queryNodeIndex('type:Statement AND code:%s AND functionId:%s')" % (objectname, func_id)
             results_1 = db.runGremlinQuery(query_str_1)
             if results_1 == []:
@@ -439,6 +449,7 @@ def getClassByObjectAndFuncID(db, objectname, func_id):
 
             classname = False
             for node in results_2:
+                print node.properties['location'].split(':')[0], location_row
                 if node.properties['location'].split(':')[0] == location_row:
                     classname = node.properties['code']
                     break
@@ -466,6 +477,7 @@ def getDeleteNode(db, func_id):
 
 def get_all_delete_node(db, testID):
     list_all_funcID = [node._id for node in getFuncNodeInTestID(db, testID)]
+    print "list_all_funcID", list_all_funcID
 
     list_all_delete_node = []
     for func_id in list_all_funcID:#allfile in a testID
@@ -485,6 +497,7 @@ def getDeclNode(db, func_id):
 
 def get_all_iddecl_node(db, testID):
     list_all_funcID = [node._id for node in getFuncNodeInTestID(db, testID)]
+    print "list_all_funcID", list_all_funcID
 
     list_all_decl_node = []
     for func_id in list_all_funcID:#allfile in a testID
@@ -497,33 +510,35 @@ def get_all_iddecl_node(db, testID):
 
 
 def getCallGraph(db, testID):
-    #get the function call graph
+    #构建函数的调用关系图
     list_all_func_node = getFuncNodeInTestID(db, testID)
-    print list_all_func_node
+    #print "list_all_func_node", list_all_func_node
     if list_all_func_node == []:
         return False
-    if list_all_func_node == False:
-        return False
+    
     call_g = Graph(directed=True)
 
     for func_node in list_all_func_node:
-        print(func_node)
+        #print(func_node)
         prop = {'funcname':func_node.properties['name'], 'type': func_node.properties['type'], 'filepath': func_node.properties['filepath']}
         call_g.add_vertex(str(func_node._id), **prop)
 
 
     list_all_callee = get_all_calls_node(db, testID)#we must limit result in testID, it already get callee node
+    #print '3 ', list_all_callee
     if list_all_callee == False:
         return False
 
     for func_node in list_all_func_node:
         function_name = func_node.properties['name']
+        #print "function_name", function_name
         tag = False
         if function_name.find('::') != -1:#if is a function in class, have two problems
             func_name = function_name.split('::')[-1].strip()
             classname = function_name.split('::')[0].strip()
 
             if func_name == classname:#is a class::class, is a statementnode or a iddeclnode
+                print 1
                 list_callee_id = []
                 list_delete_node = get_all_delete_node(db, testID)
                 if list_delete_node == False:
@@ -544,11 +559,13 @@ def getCallGraph(db, testID):
 
                             if ob_classname == classname:
                                 for p_n in pdg.vs:
+                                    #print p_n['name'], str(node._id), str(cfg_node._id)
                                     if p_n['name'] == str(node._id):
 
                                         list_s = p_n.predecessors()
                                         for edge in pdg.es:
                                             if pdg.vs[edge.tuple[0]] in list_s and pdg.vs[edge.tuple[1]] == p_n and edge['var'] == objectname:
+                                                #print (functionID, str(pdg.vs[edge.tuple[0]]['name']))
                                                 list_callee_id.append((str(functionID), str(pdg.vs[edge.tuple[0]]['name'])))
                                             else:
                                                 continue 
@@ -582,6 +599,7 @@ def getCallGraph(db, testID):
                     for cfg_node in all_cfg_node:
                         if cfg_node.properties['location'] != None and cfg_node.properties['location'].split(':')[0] == delete_loc and cfg_node.properties['code'] != 'delete' and cfg_node.properties['code'] != '[' and cfg_node.properties['code'] != '[':
                             objectname = cfg_node.properties['code']
+                            #print objectname
 
                             ob_classname = getClassByObjectAndFuncID(db, objectname, functionID)
 
@@ -605,6 +623,7 @@ def getCallGraph(db, testID):
                         continue
 
             else:
+                print 3
                 tag = 'func'
                 list_callee_id = []
                 for _t in list_all_callee:#_t is a tuple, _t[0] is nodeid, 1 is funcname, 2 is func_id
@@ -629,6 +648,7 @@ def getCallGraph(db, testID):
                 if _t[1] == function_name:
                     list_callee_id.append(_t[0])
 
+        #print 4, list_callee_id
         if list_callee_id == []:
             continue
 
@@ -636,21 +656,28 @@ def getCallGraph(db, testID):
             #change ast node to cfgnode
             list_callee_CFGNode = []
             if tag == 'func':
+                #print 'z'
                 for node_id in list_callee_id:
+                    #print 1
                     callee_cfgnode = getCFGNodeByCallee(db, node_id)
+                    #print callee_cfgnode
+                    #print 2
 
                     if callee_cfgnode == None:
                                                 
+                        print 'ERROR', callee_cfgnode
                         continue
                     else:
                         list_callee_CFGNode.append(callee_cfgnode)
 
+                #print 'x'
                 for node in list_callee_CFGNode:
                     startNode = str(node.properties['functionId'])
                     endNode = str(func_node._id)
                     var = str(node._id)
                     call_g = addDataEdge(call_g, startNode, endNode, var)#var is callee node id
             else:
+                #print 'y'
                 for node in list_callee_id:
                     startNode = str(node[0])
                     endNode = str(func_node._id)
@@ -669,22 +696,32 @@ if __name__ == '__main__':
     list_testID = os.listdir(pdg_db_path)
     print list_testID
     for testID in list_testID:
+        #if testID != '69055':
+        #    continue
+
         if os.path.exists(os.path.join("dict_call2cfgNodeID_funcID", str(testID))):
             continue
+
         call_g = getCallGraph(j, testID)
         if call_g == False:
             continue
+
         _dict = {}
         for edge in call_g.es:
             endnode = call_g.vs[edge.tuple[1]]
+
             if endnode['name'] not in _dict:
                 _dict[endnode['name']] = [(edge['var'], call_g.vs[edge.tuple[0]]['name'])]
+
             else:
                 _dict[endnode['name']].append((edge['var'], call_g.vs[edge.tuple[0]]['name']))
+
         if not os.path.exists(os.path.join("dict_call2cfgNodeID_funcID", str(testID))):
             os.mkdir(os.path.join("dict_call2cfgNodeID_funcID", str(testID)))
 
         filepath = os.path.join("dict_call2cfgNodeID_funcID", str(testID), "dict.pkl")
+        
+        print _dict
         f = open(filepath, 'wb')
         pickle.dump(_dict, f, True)
         f.close()
