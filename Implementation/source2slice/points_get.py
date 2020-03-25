@@ -1,11 +1,8 @@
 ## coding:utf-8
 from access_db_operate import *
-from py2neo.packages.httpstream import http
-http.socket_timeout = 9999
 
 
 def get_all_sensitiveAPI(db):
-    #Get the location of the call point of the sensitive function in the database, used as the starting position of the slice to save.
     fin = open("sensitive_func.pkl", 'rb')
     list_sensitive_funcname = pickle.load(fin)
     fin.close()
@@ -56,7 +53,6 @@ def get_all_sensitiveAPI(db):
 
 
 def get_all_pointer(db):
-    #Get the position of the pointer's definition point in the database, used as the starting position of the slice to save.
     _dict = {}
     list_pointers_node = get_pointers_node(db)
     for cfgnode in list_pointers_node:
@@ -78,7 +74,6 @@ def get_all_pointer(db):
 
 
 def get_all_array(db):
-    #Get the position of the defined point of the array in the database, used as the starting position of the slice to save.
     _dict = {}
     list_arrays_node = get_arrays_node(db)
     for cfgnode in list_arrays_node:
@@ -100,7 +95,6 @@ def get_all_array(db):
 
 
 def get_all_pointer_use(db):
-    #Get the position of the pointer's usage point in the database, used as the starting position of the slice to save.
     _dict = {}
     list_pointers_node = get_pointers_node(db)
     for cfgnode in list_pointers_node:
@@ -155,7 +149,6 @@ def get_all_pointer_use(db):
 
 
 def get_all_array_use(db):
-    #Get the position of the array's usage point in the database, used as the starting position of the slice to save.
     _dict = {}
     list_arrays_node = get_arrays_node(db)
     for cfgnode in list_arrays_node:
@@ -192,7 +185,6 @@ def get_all_array_use(db):
 
 
 def get_all_integeroverflow_point(db):
-    #Get the position of all assignment expressions in the database.
     _dict = {}
     list_exprstmt_node = get_exprstmt_node(db)
     for cfgnode in list_exprstmt_node:
@@ -259,6 +251,5 @@ if __name__ == '__main__':
     f = open("integeroverflow_slice_points_new.pkl", 'wb')
     pickle.dump(_dict, f, True)
     f.close()
-	
 	
     
