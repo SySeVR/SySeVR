@@ -6,7 +6,6 @@ from py2neo.packages.httpstream import http
 http.socket_timeout = 9999
 
 def modifyDataEdgeVal(pdg):
-    #修改数据依赖边上的数据
     for edge in pdg.es:
         if edge['var'] == None:
             continue
@@ -24,8 +23,6 @@ def modifyDataEdgeVal(pdg):
 
 
 def modifyStmtNode(pdg):
-    #修改了joern解析的一个一个的statement节点成为一个较为完整的Statement节点
-    
     compare_row = 0
     dict_row2nodestmt = {}
     dict_row2nodeid = {}
@@ -165,7 +162,6 @@ def modifyStmtNode(pdg):
          
 
 def getInitNodeOfDecl(pdg, list_sorted_pdgnode, node, var, dict_use, dict_def):
-    #处理的是部分在声明位置未进行初始化的节点，这部分节点在以后被赋值之后，添加声明语句和赋值语句之间的数据依赖边
     index = list_sorted_pdgnode.index(node)
     list_init_node = []
     for i in range(index+1, len(list_sorted_pdgnode)):
@@ -236,7 +232,6 @@ def completeDeclStmtOfPDG(pdg, dict_use, dict_def, dict_if2cfgnode, dict_cfgnode
 
 
 def get_nodes_before_exit(pdg, dict_if2cfgnode, dict_cfgnode2if):
-    #找到控制语句作用范围内存在return，break，exit, goto即修改语句执行路径的节点，这部分节点之前的数据，可能不能继续往后面的语句中传输
     _dict = {}
     for key in dict_cfgnode2if.keys():
         results = pdg.vs.select(name=key)
@@ -496,7 +491,7 @@ def main():
                 fin.close()
 
         i = 0
-        while i < opt_pdg_1.vcount():#这一步是为了确保CFG模块合并的节点和PDG这部分合并的节点是同一个节点
+        while i < opt_pdg_1.vcount():
             if opt_pdg_1.vs[i]['type'] == 'Statement' and opt_pdg_1.vs[i]['name'] not in cfg.vs['name']:
                 for n in cfg.vs:
                     if opt_pdg_1.vs[i]['code'] == n['code'] and int(opt_pdg_1.vs[i]['location'].split(':')[0]) == int(n['location'].split(':')[0]):
@@ -517,7 +512,7 @@ def main():
         
         opted_pdg_5 = addDataEdgeOfObject(opt_pdg_4, dict_if2cfgnode, dict_cfgnode2if)
       
-        #opted_pdg=deleteCDG(opted_pdg_5)#删除CDG，只保留DDG
+        #opted_pdg=deleteCDG(opted_pdg_5)
         
 
         if not os.path.exists(path):
