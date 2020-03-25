@@ -7,6 +7,8 @@ http.socket_timeout = 9999
 
 
 def getSubCFGGraph(startNode, list_node, not_scan_list):
+    #print "startNode", startNode['code']
+    #print ""
     if startNode['name'] in not_scan_list or startNode['code'] == 'EXIT':
         return list_node, not_scan_list
 
@@ -16,13 +18,15 @@ def getSubCFGGraph(startNode, list_node, not_scan_list):
 
     successors = startNode.successors()
     if successors != []:
-        for p_node in successors: 
+        for p_node in successors:
+            #print "P_node", p_node['name'], p_node['code']  
             list_node, not_scan_list = getSubCFGGraph(p_node, list_node, not_scan_list)
 
     return list_node, not_scan_list
 
 print
 def getCtrlRealtionOfCFG(cfg):
+
     list_ifstmt_nodes = []
     for node in cfg.vs:
         if node['type'] == 'Condition':
@@ -34,6 +38,7 @@ def getCtrlRealtionOfCFG(cfg):
             src_code = content[location_row-1]
 
             pattern = re.compile("(?:if|while|for|switch)")
+            #print src_code, node['name']
             result = re.search(pattern, src_code)
             if result == None:
                 res = 'for'
@@ -58,12 +63,14 @@ def getCtrlRealtionOfCFG(cfg):
         list_falsestmt_nodes = []
         for es in cfg.es:
             if cfg.vs[es.tuple[0]] == if_node and es['var'] == 'True':
+                
                 start_node = cfg.vs[es.tuple[1]]
                 
                 not_scan_list = [if_node['name']]
                 list_truestmt_nodes, temp = getSubCFGGraph(start_node, list_truestmt_nodes, not_scan_list)
 
             elif cfg.vs[es.tuple[0]] == if_node and es['var'] == 'False':
+                
                 start_node = cfg.vs[es.tuple[1]]              
                 not_scan_list = [if_node['name']]
                 list_falsestmt_nodes, temp = getSubCFGGraph(start_node, list_falsestmt_nodes, not_scan_list)
@@ -102,6 +109,7 @@ def getCtrlRealtionOfCFG(cfg):
             fin.close()
 
             if_line = int(if_node['location'].split(':')[0])-1
+            #print list_truestmt_nodes
             if list_truestmt_nodes == []:
                 continue
             sorted_list_truestmt_nodes = sortedNodesByLoc(list_truestmt_nodes)
@@ -208,6 +216,7 @@ def getCtrlRealtionOfCFG(cfg):
                             index += 1
 
                     real_end_line = int(if_node['location'].split(':')[0]) + index
+                    #print "real_end_line", real_end_line
                     list_real_false_stmt = []
 
                     for node in sorted_list_falsestmt_nodes:
