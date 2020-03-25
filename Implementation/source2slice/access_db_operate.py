@@ -253,7 +253,6 @@ def getDEFNodesVar(db, func_id):
 
 
 def getUseDefVarByPDG(db, pdg):
-    #找到PDG图里面节点中的语句里面的定义的数据和使用的数据之间的关系
     dict_cfg2use = {}
     dict_cfg2def = {}
     #print pdg
@@ -510,7 +509,6 @@ def get_all_iddecl_node(db, testID):
 
 
 def getCallGraph(db, testID):
-    #构建函数的调用关系图
     list_all_func_node = getFuncNodeInTestID(db, testID)
     #print "list_all_func_node", list_all_func_node
     if list_all_func_node == []:
