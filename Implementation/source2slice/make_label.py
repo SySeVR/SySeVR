@@ -45,42 +45,39 @@ def get_label_cwe(cweid, label_cwe):
 
 
 def make_label(path, dict_vuln2testcase, _type):
-	#_type==True代表着必须所有的漏洞行都包含才认为是漏洞点
     f = open(path, 'r')
-    context = f.read().split('------------------------------')[:-1]#context是切片列表
+    context = f.read().split('------------------------------')[:-1]
     f.close()
 
-    context[0] = '\n' + context[0]#在第一个切片之前添加一个换行，与其他切片保持格式一致
+    context[0] = '\n' + context[0]
 
     list_all_label = []
     list_all_vulline = []
     for _slice in context:
         vulline = []
-        index_line = _slice.split('\n')[1] #将每一个切片按行划分，取其第二行，即切片名行
-        list_codes = _slice.split('\n')[2:-1] #取切片代码行
+        index_line = _slice.split('\n')[1] 
+        list_codes = _slice.split('\n')[2:-1] 
         case_name = index_line.split(' ')[1]
-        #print case_name
-        #key_name = case_name.split('/')[5]+case_name.split('/')[6]+case_name.split('/')[7]+'/'+case_name.split('/')[8]
-        key_name = '/'.join(index_line.split(' ')[1].split('/')[-2:])#key_name表示testcase+'/'+filename
+        key_name = '/'.join(index_line.split(' ')[1].split('/')[-2:])
         print index_line
 
         if key_name in dict_vuln2testcase.keys():
-            list_codeline = [code.split(' ')[-1] for code in list_codes]#list_codeline表示切片代码每行的行号
-            dict = dict_vuln2testcase[key_name]#键是testcase+'/'+filename, dict也是一个字典，键值对是漏洞行号及漏洞类型
+            list_codeline = [code.split(' ')[-1] for code in list_codes]
+            dict = dict_vuln2testcase[key_name]
 
             _dict_cwe2line_target = {}
-            _dict_cwe2line = {}#获取实际切片中的漏洞代码行和对应的CWE
+            _dict_cwe2line = {}
 			for _dict in dict: 
                 for key in _dict.keys():
-                    if _dict[key] not in _dict_cwe2line_target.keys():#_dict_cwe2line_target的key是漏洞类型
-                        _dict_cwe2line_target[_dict[key]] = [key] #把行号赋给漏洞类型对应的键值
+                    if _dict[key] not in _dict_cwe2line_target.keys():
+                        _dict_cwe2line_target[_dict[key]] = [key] 
                     else:
-                        _dict_cwe2line_target[_dict[key]].append(key)#_dict_cwe2line_target是字典格式，存储的键值对是漏洞类型和漏洞行号
+                        _dict_cwe2line_target[_dict[key]].append(key)
 
                 
                 for line in list_codeline:
-                    line = line.strip()#line是代码行号
-                    if line in _dict.keys():#判断该行是不是漏洞行
+                    line = line.strip()
+                    if line in _dict.keys():
                         if not ' '.join((list_codes[list_codeline.index(line)].strip()).split(' ')[:-1]) == dict_testcase2code[key_name+"/"+line].strip():
                             continue
                         cweid = _dict[line]
