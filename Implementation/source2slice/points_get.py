@@ -235,13 +235,13 @@ if __name__ == '__main__':
     f.close()
     print _dict
     
-    _dict = get_all_pointer_use(j)
+    _dict = get_all_pointer(j)
     f = open("pointuse_slice_points.pkl", 'wb')
     pickle.dump(_dict, f, True)
     f.close()
     print _dict 
     
-    _dict = get_all_array_use(j)
+    _dict = get_all_array(j)
     f = open("arrayuse_slice_points.pkl", 'wb')
     pickle.dump(_dict, f, True)
     f.close()
