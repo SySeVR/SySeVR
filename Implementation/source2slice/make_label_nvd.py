@@ -43,7 +43,7 @@ def make_label(data_path,label_path,_dict):
 			for sentence in sentences:
 				if (is_number(sentence.split(' ')[-1])) is False:
 					continue
-				linenum = int(sentence.split(' ')[-1])  #源程序中的行号
+				linenum = int(sentence.split(' ')[-1])  
 				vullines = _dict[key]
 				if linenum in vullines:
 					label = 1
@@ -79,7 +79,7 @@ if __name__ == '__main__':
 	f.close()
 	#print(_dict)
 
-	code_path = './source/data_source/linux_kernel/'  #源程序
-	label_path = './C/label_source/linux_kernel/'   #标签文件
+	code_path = './source/data_source/linux_kernel/' 
+	label_path = './C/label_source/linux_kernel/' 
 	
 	make_label(code_path,label_path,_dict)	
