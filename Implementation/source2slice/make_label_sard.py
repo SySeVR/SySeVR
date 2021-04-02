@@ -46,7 +46,7 @@ def make_label(path, _dict):
                     break
         labels.append(label)
     
-    return labels#返回标签
+    return labels
        
 def is_number(s):
     try:
