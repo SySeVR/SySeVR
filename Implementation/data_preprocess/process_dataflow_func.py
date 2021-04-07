@@ -86,7 +86,7 @@ def get_sentences(_path,labelpath,corpuspath,maptype=True):
             file_name = sentences[0]
  
             if FLAGMODE:    
-                program_id = sentences[0].split(" ")[1].split("/")[7]
+                program_id = sentences[0].split(" ")[1].split("/")[-4] + sentences[0].split(" ")[1].split("/")[-3] + sentences[0].split(" ")[1].split("/")[-2]
             else:
                 program_id = sentences[0].split(" ")[1].split("/")[7]
             if lastprogram_id == 0:
