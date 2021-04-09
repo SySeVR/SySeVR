@@ -16,7 +16,8 @@ Step 1: Generating slices (i.e., SeVCs)
 
 (7) get_vulline_content.py: This file is used to get linenums of vullines in the source code file.The input are source code files and diff files.
 
-(8) getVulLineForCounting.py: python getVulLineForCounting.py ../../000 ../../SARD_testcaseinfo.xml,this file is used to extract linenum of vulline from SARD_testcaseinfo.xml. The output is SARD_testcaseinfo.txt,and then renamed as contain_all.txt.
+(8) getVulLineForCounting.py: python getVulLineForCounting.py ../../000 ../../SARD_testcaseinfo.xml,this file is used to extract linenum of vulline from SARD_testcaseinfo.xml. 
+"000" is the source code file. The output is SARD_testcaseinfo.txt,and then renamed as contain_all.txt.
 
 (9) make_label_sard.py: This file is used to get labels of sard slices.
 
