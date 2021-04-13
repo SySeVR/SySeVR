@@ -4,11 +4,11 @@ joern 0.3.1（jdk 1.7）, neo4j 2.1.5, python 3.6, tensorflow 1.6, gensim 3.4
 
 ## Step 1: Generating slices (i.e., SeVCs)
 
-(1) Use joern to parse source code: the input is source code files, and the output is a file named .joernIndex.
+1. Use joern to parse source code: the input is source code files, and the output is a file named .joernIndex.
 
-(2) get_cfg_relation.py: This file is used to get CFG graphs of functions using joern tool. The input is output of the first step, and the outputs are stored with folders in cfg_db. 
+2. get_cfg_relation.py: This file is used to get CFG graphs of functions using joern tool. The input is output of the first step, and the outputs are stored with folders in cfg_db. 
 
-(3) complete_PDG.py: This file is used to get PDG graph of functions. The inputs are files in cfg_db, and the outputs are stored with folders in pdg_db.
+3. complete_PDG.py: This file is used to get PDG graph of functions. The inputs are files in cfg_db, and the outputs are stored with folders in pdg_db.
 
 (4) access_db_operate.py: This file is used to get the call graph of functions. The inputs are files in pdg_db, and the outputs are stored with folders in dict_call2cfgNodeID_funcID.
 
@@ -20,7 +20,7 @@ joern 0.3.1（jdk 1.7）, neo4j 2.1.5, python 3.6, tensorflow 1.6, gensim 3.4
 
 (8) getVulLineForCounting.py: 
 
-python getVulLineForCounting.py ./000 ./SARD_testcaseinfo.xml
+> python getVulLineForCounting.py ./000 ./SARD_testcaseinfo.xml
 
 This file is used to extract the line numbers of vulnerable lines from SARD_testcaseinfo.xml. 
 "000" is the source code file. The output is SARD_testcaseinfo.txt,and then renamed as contain_all.txt.
