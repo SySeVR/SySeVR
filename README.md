@@ -4,6 +4,7 @@ SySeVR: A Framework for Using Deep Learning to Detect Vulnerabilities
 This is an implementation of the paper:
 
 Zhen Li, Deqing Zou, Shouhuai Xu, Hai Jin, Yawei Zhu, Zhaoxuan Chen. SySeVR: A Framework for Using Deep Learning to Detect Software Vulnerabilities. IEEE Transactions on Dependable and Secure Computing (TDSC). 2021. doi: 10.1109/TDSC.2021.3051525.[PDF]
+
 --
 
 We propose a general framework for using deep learning to detect vulnerabilities, named SySeVR. For evaluate the SySeVR, we collect the Semantics-based Vulnerability Candidate (SeVC) dataset, which contains all kinds of vulnerabilities that are available from the National Vulnerability Database (NVD) and the Software Assurance Reference Dataset (SARD).
