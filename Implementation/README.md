@@ -22,7 +22,7 @@
 
 > python getVulLineForCounting.py ./000 ./SARD_testcaseinfo.xml
 
-> This file is used to extract the line numbers of vulnerable lines from SARD_testcaseinfo.xml. 
+This file is used to extract the line numbers of vulnerable lines from SARD_testcaseinfo.xml. 
 "000" is the source code file. The output is SARD_testcaseinfo.txt, and then renamed as contain_all.txt.
 
 9. make_label_sard.py: This file is used to get labels of sard slices.
