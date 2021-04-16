@@ -32,7 +32,7 @@ def make_label(data_path,label_path,_dict):
         
 			slicename = sentences[0]
 			label = 0
-			key = slicename.split('/')[6]+'/'+slicename.split('/')[7]+'/'+slicename.split('/')[8]+'/'+slicename.split('/')[-1].split(' ')[0] #源程序的key
+			key = './' + ('/').join(slicename.split(' ')[1].split('/')[-4:])  #key in label_source
 			if key not in _dict.keys():
 				_labels[slicename] = 0
 				continue
@@ -79,7 +79,7 @@ if __name__ == '__main__':
 	f.close()
 	#print(_dict)
 
-	code_path = './source/data_source/linux_kernel/' 
-	label_path = './C/label_source/linux_kernel/' 
+	code_path = './source/data_source/linux_kernel/'  #source code of software
+	label_path = './C/label_source/linux_kernel/'   #labels
 	
 	make_label(code_path,label_path,_dict)	
