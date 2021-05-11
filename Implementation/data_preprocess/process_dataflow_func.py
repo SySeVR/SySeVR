@@ -22,10 +22,10 @@ This function is used to split the slice file and split codes into words
 # Return
     [slices[], labels[], focus[]]
 '''
-def get_sentences(_path,labelpath,corpuspath,maptype=True):
+def get_sentences(_path,labelpath,deletepath,corpuspath,maptype=True):
     FLAGMODE = False
     if "SARD" in _path:
-            FLAGMODE = True
+	FLAGMODE = True
 
     for filename in os.listdir(_path):
         if(filename.endswith(".txt") is False):
@@ -34,10 +34,7 @@ def get_sentences(_path,labelpath,corpuspath,maptype=True):
 
         filepath = os.path.join(_path, filename)
         f1 = open(filepath, 'r')
-        if FLAGMODE: 
-            slicelists = f1.read().split("------------------------------")
-        else:
-            slicelists = f1.read().split("-------------------------")
+        slicelists = f1.read().split("------------------------------")
         f1.close()
 
         if slicelists[0] == '':
@@ -49,12 +46,12 @@ def get_sentences(_path,labelpath,corpuspath,maptype=True):
         f1 = open(filepath, 'rb')
         labellists = pickle.load(f1)
         f1.close()
-
-        if slicelists[0] == '':
-            del slicelists[0]
-        if slicelists[-1] == '' or slicelists[-1] == '\n' or slicelists[-1] == '\r\n':
-            del slicelists[-1]
-
+	
+	filepath = os.path.join(deletepath,filename)
+	f = open(filepath,'rb')
+	list_delete = pickle.load(f)
+	f.close()
+	
         lastprogram_id = 0
         program_id = 0
         index = -1
@@ -83,6 +80,8 @@ def get_sentences(_path,labelpath,corpuspath,maptype=True):
                 del sentences[-1]
             focuspointer = sentences[0].split(" ")[-2:]
             sliceid = index
+            if sliceid in list_delete:
+		continue
             file_name = sentences[0]
  
             if FLAGMODE:    
@@ -200,9 +199,10 @@ if __name__ == '__main__':
     
     SLICEPATH = './data/data_source/SARD/'
     LABELPATH = './data/label_source/SARD/'
+    DELETEPATH = './data/delete_list/SARD/'
     CORPUSPATH = './data/corpus/'
     MAPTYPE = True
 
-    sentenceDict = get_sentences(SLICEPATH, LABELPATH, CORPUSPATH, MAPTYPE)
+    sentenceDict = get_sentences(SLICEPATH, LABELPATH, DELETEPATH, CORPUSPATH, MAPTYPE)
 
     print('success!')
