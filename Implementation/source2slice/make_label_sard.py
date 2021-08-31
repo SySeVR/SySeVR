@@ -32,6 +32,7 @@ def make_label(path, _dict):
         label = 0
         
         if slicename not in _dict.keys():
+	    labels.append(label)
             continue
         else:
             vulline_nums = _dict[slicename]
