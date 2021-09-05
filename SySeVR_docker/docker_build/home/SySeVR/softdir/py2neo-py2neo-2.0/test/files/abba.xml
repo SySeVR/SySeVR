@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<group id="abba">
+  <member id="agnetha">
+    <name>Agnetha Fältskog</name>
+    <birth date="1950-04-05" />
+  </member>
+  <member id="björn">
+    <name>Björn Ulvaeus</name>
+    <birth date="1945-04-25" />
+  </member>
+  <member id="benny">
+    <name>Benny Andersson</name>
+    <birth date="1946-12-16" />
+  </member>
+  <member id="frida">
+    <name>Anni-Frid Lyngstad</name>
+    <birth date="1945-11-15" />
+  </member>
+  <song id="waterloo" release_date="1974-03-04">
+    <name>Waterloo</name>
+    <length min="2" sec="42" />
+  </song>
+</group>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<planets>
+
+  <planet>
+    <name>Mercury</name>
+    <distance unit="km">57.91</distance>
+    <radius unit="km">2340</radius>
+    <year>0.24085</year>
+    <day unit="days">88</day>
+    <mass unit="(Earth=1)">0.054</mass>
+    <density unit="gm/cm">6.03</density>
+  </planet>
+
+  <planet>
+    <name>Venus</name>
+    <distance unit="km">108.21</distance>
+    <radius unit="km">6100</radius>
+    <year>0.61521</year>
+    <day unit="days">230</day>
+    <mass unit="(Earth=1)">0.814</mass>
+    <density unit="gm/cm">5.11</density>
+  </planet>
+
+  <planet>
+    <name>Earth</name>
+    <distance unit="km">149.60</distance>
+    <radius unit="km">6371</radius>
+    <year>1.000039</year>
+    <day unit="hours">24</day>
+    <mass unit="(Earth=1)">1.00</mass>
+    <density unit="gm/cm">5.517</density>
+    <satellites>
+      <satellite>
+        <name>Moon</name>
+        <orbit unit="days">27.322</orbit>
+      </satellite>
+    </satellites>
+  </planet>
+
+  <planet>
+    <name>Mars</name>
+    <distance unit="km">227.9</distance>
+    <radius unit="km">3324</radius>
+    <year>1.88089</year>
+    <day unit="hours">24.5</day>
+    <mass unit="(Earth=1)">0.107</mass>
+    <density unit="gm/cm">4.16</density>
+    <satellites>
+      <satellite>
+        <name>Phobos</name>
+        <orbit unit="days">0.319</orbit>
+      </satellite>
+      <satellite>
+        <name>Deimos</name>
+        <orbit unit="days">1.262</orbit>
+      </satellite>
+    </satellites>
+  </planet>
+
+
+  <planet>
+    <name>Jupiter</name>
+    <distance unit="km">778.3</distance>
+    <radius unit="km">69750</radius>
+    <year>11.8653</year>
+    <day unit="hours">9.8</day>
+    <mass unit="(Earth=1)">317.4</mass>
+    <density unit="gm/cm">1.34</density>
+    <satellites>
+      <satellite>
+        <name>Ganymede</name>
+        <orbit unit="days">7.155</orbit>
+      </satellite>
+      <satellite>
+        <name>Callisto</name>
+        <orbit unit="days">16.689</orbit>
+      </satellite>
+    </satellites>
+  </planet>
+
+  <planet>
+    <name>Saturn</name>
+    <distance unit="km">1428</distance>
+    <radius unit="km">58170</radius>
+    <year>29.6501</year>
+    <day unit="hours">10.2</day>
+    <mass unit="(Earth=1)">95.0</mass>
+    <density unit="gm/cm">0.68</density>
+    <satellites>
+      <satellite>
+        <name>Titan</name>
+        <orbit unit="days">15.945</orbit>
+      </satellite>
+      <satellite>
+        <name>Rhea</name>
+        <orbit unit="days">4.518</orbit>
+      </satellite>
+    </satellites>
+  </planet>
+
+  <planet>
+    <name>Uranus</name>
+    <distance unit="km">2872</distance>
+    <radius unit="km">23750</radius>
+    <year>83.7445</year>
+    <day unit="hours">10.7</day>
+    <mass unit="(Earth=1)">14.5</mass>
+    <density unit="gm/cm">1.55</density>
+    <satellites>
+      <satellite>
+        <name>Ariel</name>
+        <orbit unit="days">2.520</orbit>
+      </satellite>
+      <satellite>
+        <name>Miranda</name>
+        <orbit unit="days">1.414</orbit>
+      </satellite>
+    </satellites>
+  </planet>
+
+  <planet>
+    <name>Neptune</name>
+    <distance unit="km">4498</distance>
+    <radius unit="km">22400</radius>
+    <year>165.951</year>
+    <day unit="hours">12.7</day>
+    <mass unit="(Earth=1)">17.6</mass>
+    <density unit="gm/cm">2.23</density>
+    <satellites>
+      <satellite>
+        <name>Triton</name>
+        <orbit unit="days">5.877</orbit>
+      </satellite>
+    </satellites>
+  </planet>
+
+</planets>

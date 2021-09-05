@@ -1,0 +1,107 @@
+----------------------------------------------------------------------------
+
+
+Upgrading
+
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+
+Table of Contents
+
+1. Automatic Store Upgrade
+2. Explicit Store Upgrade
+
+
+    Important
+
+    This section describes upgrading a single Neo4j instance. Upgrading a Neo4j
+    HA cluster (Neo4j Enterprise) requires a very specific process be followed.
+    Please refer to ???.
+
+A database created by an older version of Neo4j will be upgraded when opened by 
+Neo4j 2.1.5 during startup. Whilst this upgrade will occur automatically for 
+minor changes, larger migrations require explicit configuration before Neo4j 
+will start.
+
+Each Neo4j version supports upgrading from a limited number of previous 
+versions. These upgrades are either automatic, or require explicit 
+configuration to allow them.
+
+In this release of Neo4j, the following upgrades are permitted.
+
+1.9.x --> 2.1.5
+    Explicit configuration is required
+
+2.0.x --> 2.1.5
+    Explicit configuration is required
+
+2.1.x --> 2.1.5
+    Automatically performs any store upgrade
+
+
+
+    Note
+
+    Downgrade is only supported between Neo4j versions that allow for automatic
+    store upgrades. This typically means only within patch releases of the same
+    Neo4j version.
+
+----------------------------------------------------------------------------
+
+
+1. Automatic Store Upgrade
+
+----------------------------------------------------------------------------
+
+To perform a normal store upgrade (for minor changes to the database store):
+
+   1. Cleanly shut down the older version of Neo4j, if it is running.
+   2. Install Neo4j 2.1.5, and set it up to use the same database store
+      directory (typically data/graph.db).
+   3. NOTE: It is strongly advised to make a copy of the database store
+      directory at this time, to use as a backup in case rollback/downgrade is
+      required. This is not necessary if a backup has been made using the 
+      online backup tool, available with Neo4j Enterprise.
+   4. Start up Neo4j.
+   5. Any database store upgrade required will occur during startup.
+----------------------------------------------------------------------------
+
+
+2. Explicit Store Upgrade
+
+----------------------------------------------------------------------------
+
+To perform an explicit store upgrade (required for significant changes to the 
+database store):
+
+   1. Cleanly shut down the older version of Neo4j, if it is running.
+   2. Install Neo4j 2.1.5, and set it up to use the same database store
+      directory (typically data/graph.db).
+   3. Set the Neo4j configuration parameter allow_store_upgrade=true in your 
+      conf/neo4j.properties file. Neo4j will fail to start without this
+      configuration set.
+   4. Start up Neo4j.
+   5. The database store upgrade will occur during startup.
+   6. The allow_store_upgrade configuration parameter should be removed, set to 
+      false or commented out.
+   7. Information about the upgrade and a progress indicator are logged into
+      the messages.log file, inside the database store directory.
+
+
+    Caution
+
+    An explicit upgrade will require substantial free disk space, as it must
+    make an entire copy of the database store. The upgraded store version may
+    also require larger store files overall. It is suggested to have available
+    free disk space equivalent to at least 1.5 times the size of the existing
+    store.
+
+
+    Note
+
+    Cypher compatibility: The Cypher language is rapidly evolving, and may
+    change between Neo4j versions (although not between patch releases).
+    However, Neo4j supports compatibility directives for Cypher, that allow
+    explicitly selecting a language version. This is possible to do for
+    individual statements, or globally, as described in the Cypher
+    Compatibility section.

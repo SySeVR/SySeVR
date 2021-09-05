@@ -1,0 +1,29 @@
+Metadata-Version: 1.1
+Name: pygraphviz
+Version: 1.3
+Summary: Python interface to Graphviz
+Home-page: http://pygraphviz.github.io
+Author: Aric Hagberg
+Author-email: aric.hagberg@gmail.com
+License: BSD
+Download-URL: https://pypi.python.org/pypi/pygraphviz
+Description: PyGraphviz is a Python interface to the Graphviz graph layout and visualization package. With PyGraphviz you can create, edit, read, write, and draw graphs using Python to access the Graphviz graph data structure and layout algorithms. PyGraphviz provides a similar programming interface to NetworkX (http://networkx.github.io). 
+        
+Keywords: Networks,Graph Visualization,network,graph,graph drawing
+Platform: Linux
+Platform: Mac OSX
+Platform: Microsoft :: Windows
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: BSD License
+Classifier: Programming Language :: C
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 2
+Classifier: Programming Language :: Python :: 2.7
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Classifier: Topic :: Scientific/Engineering :: Mathematics
+Classifier: Topic :: Scientific/Engineering :: Visualization

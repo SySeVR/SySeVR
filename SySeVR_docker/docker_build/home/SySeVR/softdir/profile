@@ -1,0 +1,34 @@
+# /etc/profile: system-wide .profile file for the Bourne shell (sh(1))
+# and Bourne compatible shells (bash(1), ksh(1), ash(1), ...).
+
+if [ "$PS1" ]; then
+  if [ "$BASH" ] && [ "$BASH" != "/bin/sh" ]; then
+    # The file bash.bashrc already sets the default PS1.
+    # PS1='\h:\w\$ '
+    if [ -f /etc/bash.bashrc ]; then
+      . /etc/bash.bashrc
+    fi
+  else
+    if [ "`id -u`" -eq 0 ]; then
+      PS1='# '
+    else
+      PS1='$ '
+    fi
+  fi
+fi
+
+if [ -d /etc/profile.d ]; then
+  for i in /etc/profile.d/*.sh; do
+    if [ -r $i ]; then
+      . $i
+    fi
+  done
+  unset i
+fi
+export JAVA_HOME=/usr/java/jdk1.8.0_161
+export JRE_HOME=/usr/java/jdk1.8.0_161/jre
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib
+export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
+export ANT_HOME=/usr/ant/apache-ant-1.9.14
+export PATH=$PATH:$ANT_HOME/bin
+export JOERN_HOME=/home/SySeVR/joern-0.3.1

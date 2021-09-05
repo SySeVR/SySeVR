@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xbrli:xbrl
+xmlns:ifrs-gp="http://xbrl.iasb.org/int/fr/ifrs/gp/2005-05-15"
+xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
+xmlns:xbrli="http://www.xbrl.org/2003/instance"
+xmlns:xbrll="http://www.xbrl.org/2003/linkbase"
+xmlns:xlink="http://www.w3.org/1999/xlink">
+ 
+    <xbrll:schemaRef xbrll:href="http://www.org.com/xbrl/taxonomy" xlink:type="simple"/>
+    <ifrs-gp:OtherOperatingIncomeTotalFinancialInstitutions contextRef="J2004" 
+        decimals="0" unitRef="EUR">38679000000</ifrs-gp:OtherOperatingIncomeTotalFinancialInstitutions>
+    <ifrs-gp:OtherAdministrativeExpenses contextRef="J2004" 
+        decimals="0" unitRef="EUR">35996000000</ifrs-gp:OtherAdministrativeExpenses>
+    <ifrs-gp:OtherOperatingExpenses contextRef="J2004" 
+        decimals="0" unitRef="EUR">870000000</ifrs-gp:OtherOperatingExpenses>
+    ...
+    <ifrs-gp:OtherOperatingIncomeTotalByNature contextRef="J2004" 
+        decimals="0" unitRef="EUR">10430000000</ifrs-gp:OtherOperatingIncomeTotalByNature>
+    <xbrli:context id="BJ2004">
+        <xbrli:entity>
+            <xbrli:identifier scheme="www.iqinfo.com/xbrl">ACME</xbrli:identifier>
+        </xbrli:entity>
+        <xbrli:period>
+            <xbrli:instant>2004-01-01</xbrli:instant>
+        </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="EJ2004">
+        <xbrli:entity>
+            <xbrli:identifier scheme="www.iqinfo.com/xbrl">ACME</xbrli:identifier>
+        </xbrli:entity>
+        <xbrli:period>
+            <xbrli:instant>2004-12-31</xbrli:instant>
+        </xbrli:period>
+    </xbrli:context>
+    <xbrli:context id="J2004">
+        <xbrli:entity>
+            <xbrli:identifier scheme="www.iqinfo.com/xbrl">ACME</xbrli:identifier>
+        </xbrli:entity>
+        <xbrli:period>
+            <xbrli:startDate>2004-01-01</xbrli:startDate>
+            <xbrli:endDate>2004-12-31</xbrli:endDate>
+        </xbrli:period>
+    </xbrli:context>
+    <xbrli:unit id="EUR">
+        <xbrli:measure>iso4217:EUR</xbrli:measure>
+    </xbrli:unit>
+</xbrli:xbrl>
