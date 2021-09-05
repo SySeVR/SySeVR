@@ -1,4 +1,4 @@
-# Sysevr docker image instructions
+# SySeVR docker image instructions
 
 *Reminder: the device needs nvdia graphics card support, and docker and nvidia-docker2 have been installed in Linux system*
 
