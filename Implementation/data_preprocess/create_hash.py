@@ -58,7 +58,7 @@ def get_hashs(slicepath, hashpath):
             #print(slicelist)
             data = hash(slicelist)
             datalist.append(data)
-        f = open(os.path.join(hashpath,(filename[:-4]+".pkl"),'wb'))
+        f = open(os.path.join(hashpath,(filename[:-4]+".pkl")),'wb')
         pickle.dump(datalist, f)
         f.close()
 
