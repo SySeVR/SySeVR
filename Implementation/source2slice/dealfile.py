@@ -34,12 +34,14 @@ def dealfunc_nvd(folder_path,diff_path):
     for filename in os.listdir(folder_path):
         if 'PATCHED' in filename:
             continue
-        cve_id = ('-').join(filename.split('_')[:3])
+        pattern = re.compile(r"(?P<cve_id>CVE[-_][0-9]*[-_][0-9]*)[-_]")
+        match = re.search(pattern, filename)
+        cve_id = "-".join(match.group("cve_id").split("_"))
         filepath = os.path.join(folder_path,filename)
         f = open(filepath,'r')
         sentences = f.read().split('\n')
         f.close()
-        diffpath = os.path.join(diff_path,(cve_id+'.txt'))
+        diffpath = os.path.join(diff_path,cve_id,(cve_id + '.txt'))
         f = open(diffpath,'r')
         diffsens = f.read().split('\n')
         f.close()
