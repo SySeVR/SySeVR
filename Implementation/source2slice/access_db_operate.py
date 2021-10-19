@@ -399,9 +399,6 @@ def get_all_calls_node(db, testID):
     list_all_funcID = [node._id for node in getFuncNodeInTestID(db, testID)]
     print "list_all_funcID", list_all_funcID
     print "lenth", len(list_all_funcID)
-    if len(list_all_funcID)>130:
-        print ">100"
-        return False
     list_all_callee_node = []
     for func_id in list_all_funcID:#allfile in a testID
         list_all_callee_node += getCalleeNode(db, func_id)
