@@ -87,7 +87,7 @@ def get_sentences(_path,labelpath,deletepath,corpuspath,maptype=True):
             if FLAGMODE:    
                 program_id = sentences[0].split(" ")[1].split("/")[-4] + sentences[0].split(" ")[1].split("/")[-3] + sentences[0].split(" ")[1].split("/")[-2]
             else:
-                program_id = sentences[0].split(" ")[1].split("/")[7]
+                program_id = sentences[0].split(" ")[1].split("/")[-1]
             if lastprogram_id == 0:
                 lastprogram_id = program_id
 
@@ -163,7 +163,7 @@ def get_sentences(_path,labelpath,deletepath,corpuspath,maptype=True):
 
 	    if flag_focus == 0:
                 continue
-            slicefile_labels.append(labellists[int(sliceid)])
+            slicefile_labels.append(labellists[file_name])
             slicefile_filenames.append(file_name)
 
             if maptype:
