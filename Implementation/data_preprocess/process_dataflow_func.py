@@ -16,6 +16,7 @@ This function is used to split the slice file and split codes into words
 # Arguments
     _path: String type, the src of slice files
     labelpath: String type, the src of label files
+    deletepath: delete list, delete repeat slices
     corpuspath: String type, the src to save corpus
     maptype: bool type, choose do map or not
 
