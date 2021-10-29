@@ -6,6 +6,7 @@
 import pickle
 import os
 import shutil
+import re
 
 ##处理sard源程序文件格式
 def dealfile_sard(folder_path):
