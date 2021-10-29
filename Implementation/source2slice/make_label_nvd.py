@@ -79,7 +79,7 @@ if __name__ == '__main__':
 	f.close()
 	#print(_dict)
 
-	code_path = './source/data_source/linux_kernel/'  #source code of software
+	code_path = './data_source/linux_kernel/'  #slice code of software
 	label_path = './C/label_source/linux_kernel/'   #labels
 	
 	make_label(code_path,label_path,_dict)	
