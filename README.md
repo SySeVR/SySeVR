@@ -2,7 +2,7 @@ SySeVR: A Framework for Using Deep Learning to Detect Vulnerabilities
 =
 
 
-Zhen Li, Deqing Zou, Shouhuai Xu, Hai Jin, Yawei Zhu, Zhaoxuan Chen. [SySeVR: A Framework for Using Deep Learning to Detect Software Vulnerabilities](https://arxiv.org/abs/1807.06756). IEEE Transactions on Dependable and Secure Computing (TDSC). 2021. doi: 10.1109/TDSC.2021.3051525. 
+Zhen Li, Deqing Zou, Shouhuai Xu, Hai Jin, Yawei Zhu, Zhaoxuan Chen. [SySeVR: A Framework for Using Deep Learning to Detect Software Vulnerabilities](https://arxiv.org/abs/1807.06756). IEEE Transactions on Dependable and Secure Computing (TDSC). 2021, 19(4): 2244-2258.  
 
 ---
 
