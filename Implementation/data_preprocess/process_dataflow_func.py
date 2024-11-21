@@ -26,7 +26,7 @@ This function is used to split the slice file and split codes into words
 def get_sentences(_path,labelpath,deletepath,corpuspath,maptype=True):
     FLAGMODE = False
     if "SARD" in _path:
-	FLAGMODE = True
+        FLAGMODE = True
 
     for filename in os.listdir(_path):
         if(filename.endswith(".txt") is False):
@@ -48,10 +48,10 @@ def get_sentences(_path,labelpath,deletepath,corpuspath,maptype=True):
         labellists = pickle.load(f1)
         f1.close()
 	
-	filepath = os.path.join(deletepath,filename)
-	f = open(filepath,'rb')
-	list_delete = pickle.load(f)
-	f.close()
+        filepath = os.path.join(deletepath,filename[:-4]+".pkl")
+        f = open(filepath,'rb')
+        list_delete = pickle.load(f)
+        f.close()
 	
         lastprogram_id = 0
         program_id = 0
@@ -82,7 +82,7 @@ def get_sentences(_path,labelpath,deletepath,corpuspath,maptype=True):
             focuspointer = sentences[0].split(" ")[-2:]
             sliceid = index
             if sliceid in list_delete:
-		continue
+                continue
             file_name = sentences[0]
  
             if FLAGMODE:    
@@ -161,8 +161,8 @@ def get_sentences(_path,labelpath,deletepath,corpuspath,maptype=True):
                     slice_corpus.append(list_tokens)
                 else:
                     slice_corpus = slice_corpus + list_tokens
-
-	    if flag_focus == 0:
+            
+            if flag_focus == 0:
                 continue
             slicefile_labels.append(labellists[file_name])
             slicefile_filenames.append(file_name)
